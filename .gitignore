@@ -1,0 +1,41 @@
+# --- secrets -------------------------------------------------------------
+.env
+.env.*
+!.env.example
+backend/.env
+
+# --- runtime data: uploaded images, SQLite history ----------------------
+backend/storage/
+storage/
+uploads/
+*.db
+*.sqlite
+*.sqlite3
+
+# --- python ---------------------------------------------------------------
+backend/.venv/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# --- node / build output --------------------------------------------------
+node_modules/
+frontend/dist/
+dist/
+
+# --- deployment / tooling caches -----------------------------------------
+.vercel/
+.claude/
+
+# --- logs, temp, OS / editor files ---------------------------------------
+*.log
+.tmp_storage/
+tmp/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

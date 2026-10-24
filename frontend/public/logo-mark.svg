@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="225 328 250 294" role="img" aria-label="Escalate">
+  <defs>
+    <linearGradient id="esc-arrow" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0" stop-color="#ff8a3d"/>
+      <stop offset="1" stop-color="#ec4a2d"/>
+    </linearGradient>
+    <linearGradient id="esc-bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#151c26"/>
+      <stop offset="0.6" stop-color="#1b232e"/>
+      <stop offset="1" stop-color="#4a4f55"/>
+    </linearGradient>
+  </defs>
+  <polygon points="231,509 298,472 298,541 231,579" fill="#19212a"/>
+  <polygon points="318,471 396,428 396,573 318,618" fill="url(#esc-bar)"/>
+  <polygon points="338,413 469,334 469,452 456,440 456,596 417,573 417,396 338,437" fill="url(#esc-arrow)"/>
+</svg>

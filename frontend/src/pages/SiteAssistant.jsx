@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { api } from '../api'
+import { IconSiteAssistant } from '../components/Icons'
 import { Badge, Card, ErrorBanner, Field, List, Loading, PageHeader, ResultMeta } from '../components/ui'
 import { useApi } from '../useApi'
 import { arr, num } from '../utils'
@@ -27,7 +28,7 @@ export default function SiteAssistant() {
 
   return (
     <>
-      <PageHeader icon="🌦" title="Daily Site Assistant & Weather Advisory"
+      <PageHeader icon={<IconSiteAssistant size={28} color="var(--accent)" />} title="Daily Site Assistant & Weather Advisory"
         subtitle="Live forecast + AI go/no-go guidance for today's planned activities." />
       <div className="layout-2">
         <Card title="Today's plan">
@@ -72,8 +73,8 @@ export default function SiteAssistant() {
                         <strong>{new Date(day.date + 'T00:00').toLocaleDateString(undefined, { weekday: 'short', day: 'numeric' })}</strong>
                         <span>{day.condition}</span>
                         <span>{day.temp_min_c ?? '–'}° / {day.temp_max_c ?? '–'}°C</span>
-                        <span>💧 {day.precipitation_mm ?? 0} mm ({day.precipitation_probability ?? 0}%)</span>
-                        <span>💨 {day.wind_max_kmh ?? '–'} km/h</span>
+                        <span>Precip: {day.precipitation_mm ?? 0} mm ({day.precipitation_probability ?? 0}%)</span>
+                        <span>Wind: {day.wind_max_kmh ?? '–'} km/h</span>
                       </div>
                     ))}
                   </div>

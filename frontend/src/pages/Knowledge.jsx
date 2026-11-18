@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { api } from '../api'
+import { IconBook, IconFileText, IconKnowledge } from '../components/Icons'
 import ImageUpload from '../components/ImageUpload'
 import { Badge, ErrorBanner, Markdown, PageHeader } from '../components/ui'
 import { arr, num } from '../utils'
@@ -49,7 +50,7 @@ export default function Knowledge() {
 
   return (
     <>
-      <PageHeader icon="💬" title="Construction Knowledge Assistant"
+      <PageHeader icon={<IconKnowledge size={28} color="var(--accent)" />} title="Construction Knowledge Assistant"
         subtitle="Ask about codes, materials, methods, estimation and safety — attach a photo if useful." />
       <div className="chat">
         <div className="chat-log">
@@ -73,7 +74,9 @@ export default function Knowledge() {
         <ErrorBanner error={error} onClose={() => setError(null)} />
         {showUpload && <div className="chat-upload"><ImageUpload file={image} onChange={setImage} label="Attach image" optional /></div>}
         <form className="chat-input" onSubmit={(e) => { e.preventDefault(); send() }}>
-          <button type="button" className={`icon-btn ${image ? 'on' : ''}`} title="Attach image" onClick={() => setShowUpload((s) => !s)}>📎</button>
+          <button type="button" className={`icon-btn ${image ? 'on' : ''}`} title="Attach image" onClick={() => setShowUpload((s) => !s)}>
+            <IconFileText size={16} />
+          </button>
           <textarea rows={1} value={input} maxLength={8000} placeholder="Ask a construction question…"
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send() } }} />
@@ -95,7 +98,7 @@ function Answer({ m, onAsk }) {
         <details open><summary>Key points</summary><ul className="list">{d.key_points.map((k, i) => <li key={i}>{k}</li>)}</ul></details>
       )}
       {arr(d.code_references).length > 0 && (
-        <div className="refs">{d.code_references.map((r, i) => <span className="tag" key={i}>📘 {r}</span>)}</div>
+        <div className="refs">{d.code_references.map((r, i) => <span className="tag" key={i}><IconBook size={12} /> {r}</span>)}</div>
       )}
       {arr(d.safety_considerations).length > 0 && (
         <details><summary>Safety considerations</summary><ul className="list">{d.safety_considerations.map((k, i) => <li key={i}>{k}</li>)}</ul></details>

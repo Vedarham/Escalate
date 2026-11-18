@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { api } from '../api'
+import { IconBook, IconLocation, IconSafety } from '../components/Icons'
 import ImageUpload from '../components/ImageUpload'
 import { Badge, Card, Confidence, ErrorBanner, Field, List, Loading, PageHeader, ResultMeta, ScoreRing, Stat } from '../components/ui'
 import { useApi } from '../useApi'
@@ -20,7 +21,7 @@ export default function Safety() {
 
   return (
     <>
-      <PageHeader icon="🦺" title="Site Safety Monitoring"
+      <PageHeader icon={<IconSafety size={28} color="var(--accent)" />} title="Site Safety Monitoring"
         subtitle="Detect hazards and PPE compliance issues from jobsite photos." />
       <div className="layout-2">
         <Card title="Input">
@@ -70,7 +71,9 @@ export default function Safety() {
                       <strong>{h.category}</strong> <Badge value={h.severity} />
                     </div>
                     <p>{h.description}</p>
-                    <div className="small muted">📍 {h.location_in_image || '—'} {h.regulation_reference && `· 📘 ${h.regulation_reference}`}</div>
+                    <div className="small muted">
+                      <IconLocation size={13} /> {h.location_in_image || '—'} {h.regulation_reference && <><span style={{ margin: '0 4px' }}>·</span><IconBook size={13} /> {h.regulation_reference}</>}
+                    </div>
                     <div className="small"><strong>Action:</strong> {h.recommended_action}</div>
                   </div>
                 ))}

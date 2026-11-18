@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { api } from '../api'
 import { BarList, FloorPlan, GanttChart } from '../components/Charts'
+import { IconPlanning } from '../components/Icons'
 import { Card, ErrorBanner, Field, List, Loading, PageHeader, ResultMeta, Stat } from '../components/ui'
 import { useApi } from '../useApi'
 import { arr, label, money, num } from '../utils'
@@ -25,7 +26,7 @@ export default function Planning() {
 
   return (
     <>
-      <PageHeader icon="📐" title="Construction Planning & Estimation"
+      <PageHeader icon={<IconPlanning size={28} color="var(--accent)" />} title="Construction Planning & Estimation"
         subtitle="Material quantities, cost breakdown, AI schedule with critical path, and an architectural concept." />
       <div className="layout-2">
         <Card title="Project brief">

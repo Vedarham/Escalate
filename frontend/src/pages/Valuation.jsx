@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { api } from '../api'
 import { BarList } from '../components/Charts'
+import { IconValuation } from '../components/Icons'
 import ImageUpload from '../components/ImageUpload'
 import { Badge, Card, Confidence, ErrorBanner, Field, List, Loading, PageHeader, ResultMeta, Stat } from '../components/ui'
 import { useApi } from '../useApi'
@@ -34,7 +35,7 @@ export default function Valuation() {
 
   return (
     <>
-      <PageHeader icon="🏠" title="Real Estate Valuation" subtitle="AI-assisted market value estimate from property details and photos." />
+      <PageHeader icon={<IconValuation size={28} color="var(--accent)" />} title="Real Estate Valuation" subtitle="AI-assisted market value estimate from property details and photos." />
       <div className="layout-2">
         <Card title="Property details">
           <form onSubmit={submit} className="form">

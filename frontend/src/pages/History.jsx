@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { api } from '../api'
+import { IconHistory } from '../components/Icons'
 import { Card, ErrorBanner, PageHeader } from '../components/ui'
 import { arr } from '../utils'
 
@@ -20,7 +21,7 @@ export default function History() {
 
   return (
     <>
-      <PageHeader icon="🗂" title="Analysis History" subtitle="Every AI result is stored with its inputs for audit and reporting." />
+      <PageHeader icon={<IconHistory size={28} color="var(--accent)" />} title="Analysis History" subtitle="Every AI result is stored with its inputs for audit and reporting." />
       <ErrorBanner error={error} onClose={() => setError(null)} />
       <div className="layout-2">
         <Card title="Records" actions={

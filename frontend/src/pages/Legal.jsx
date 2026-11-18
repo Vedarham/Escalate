@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { api } from '../api'
+import { IconLegal } from '../components/Icons'
 import ImageUpload from '../components/ImageUpload'
 import { Badge, Card, Confidence, ErrorBanner, Field, List, Markdown, PageHeader } from '../components/ui'
 import { arr, label, num } from '../utils'
@@ -63,7 +64,7 @@ export default function Legal() {
 
   return (
     <>
-      <PageHeader icon="⚖️" title="Land Purchase Legal Advisor"
+      <PageHeader icon={<IconLegal size={28} color="var(--accent)" />} title="Land Purchase Legal Advisor"
         subtitle="Ask about title, ownership, inheritance, agricultural restrictions, fraud and due diligence. Answers are grounded in a cited land-law knowledge base." />
       <div className="layout-2">
         <div className="stack">

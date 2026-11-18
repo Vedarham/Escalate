@@ -6,16 +6,20 @@ You deploy this project yourself through GitHub and Vercel. This page lists what
 
 | Item | Value |
 |---|---|
-| Python entrypoint | `backend/app/main.py`, variable `app` (FastAPI). As a module path: `backend.app.main:app`. |
-| Python version | 3.12 is recommended (Vercel's default); the code runs on 3.10+ |
-| Python dependencies | `backend/requirements.txt`. `pytest` is only needed for tests and can be left out of the runtime install. FastAPI 0.162 or later is required for `app.frontend()`. |
-| Frontend build | `frontend/` is a Vite app. `npm run build` writes `frontend/dist`. |
-| Serving the frontend | If `frontend/dist` exists when the app starts, FastAPI serves it through `app.frontend("/", fallback="index.html")`. On Vercel these files are promoted to the CDN automatically, and `/api/*` routes always take priority. |
-| Alternative layout | Host `frontend/` as its own Vite project, set `VITE_API_BASE` to the API URL at build time, and add the frontend's domain to `CORS_ORIGINS`. |
-| Function duration | Live AI calls usually take 2–7 s. The legal agent makes two calls, about 5–10 s, and up to ~20 s when a provider is rate-limiting. Allow at least 60 s for the Python function. |
-| Bundle | Runtime dependencies are small (no ML libraries). The knowledge base (`backend/app/knowledge/`) must be included; it is read at start-up. |
+| Python serverless entrypoint | `api/index.py`, exports `app` and `handler` for Vercel. |
+| Python version | 3.12 is recommended (Vercel default); the code runs on 3.10+ |
+| Python dependencies | `requirements.txt` in root (installed via `pip install -r requirements.txt`). |
+| Frontend build | `buildCommand: cd frontend && npm install && npm run build` -> output: `frontend/dist`. |
+| Routing | `vercel.json` rewrites `/api/(.*)` to `api/index.py` and all other paths to `/index.html`. |
+| Function duration | Configured to `maxDuration: 60` in `vercel.json` (avoids Vercel's default 10s serverless timeout). |
+| Static knowledge assets | `backend/app/knowledge/**` bundled via `includeFiles` in `vercel.json`. |
 
-**Environment variables** (Vercel project settings; never commit `.env`): `GROQ_API_KEY` (required for live AI), optionally `HF_TOKEN`, plus any of the variables listed in `backend/.env.example`. `DEMO_MODE` must be `false` or unset in production.
+**Environment variables** (Vercel Project Settings -> Environment Variables):
+- `GROQ_API_KEY`: Required for live AI.
+- `HF_TOKEN`: Optional fallback provider.
+- `LLM_PROVIDER`: `groq` (default).
+- `DEMO_MODE`: `false` (or leave unset).
+- `FALLBACK_TO_DEMO`: `true` (recommended so temporary rate-limits serve demo data gracefully).
 
 **Serverless constraints already handled in code**
 - **Read-only filesystem:** when the `VERCEL` environment variable is present, storage automatically moves to `/tmp/escalate-storage`. History and uploaded images are therefore **ephemeral**: they last for the life of a function instance. For permanent history, replace `services/storage.py` with a hosted database (for example Postgres).

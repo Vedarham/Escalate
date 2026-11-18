@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+import os
 from pathlib import Path
 
 from fastapi import FastAPI, Request
@@ -26,8 +27,11 @@ app = FastAPI(
                 "planning, daily site advisory, knowledge assistance and land-purchase legal guidance. All responses follow strict JSON contracts.",
 )
 app.add_middleware(
-    CORSMiddleware, allow_origins=list(settings.cors_origins), allow_credentials=False,
-    allow_methods=["GET", "POST"], allow_headers=["*"],
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
 )
 
 
@@ -72,5 +76,9 @@ for r in (system.router, analysis.router, planning.router, assistant.router, leg
 # Serve the built React app (frontend/dist) when present. API routes always take priority;
 # on Vercel the files are promoted to the CDN automatically, locally FastAPI serves them.
 DIST = Path(__file__).resolve().parents[2] / "frontend" / "dist"
-if DIST.is_dir():
-    app.frontend("/", directory=DIST, fallback="index.html")
+if DIST.is_dir() and not os.getenv("VERCEL"):
+    if hasattr(app, "frontend"):
+        app.frontend("/", directory=DIST, fallback="index.html")
+    else:
+        from starlette.staticfiles import StaticFiles
+        app.mount("/", StaticFiles(directory=DIST, html=True), name="frontend")

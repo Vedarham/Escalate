@@ -96,9 +96,103 @@ To extend the knowledge base, add more `.md` files in the same format (`## ID | 
 | `STORAGE_DIR` | `storage` | SQLite + uploads location (git-ignored). On Vercel it is always under `/tmp`. |
 | `VITE_API_BASE` (frontend, build time) | empty | API origin when the frontend and backend are hosted separately |
 
-## Deploying (Vercel + GitHub)
+## How to Run
 
-The code is ready for Vercel's Python runtime. See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for what the platform needs:
+### Prerequisites
+- **Python 3.10+** (tested on 3.12)
+- **Node.js 18+** & npm
+- *(Optional)* Free Groq API key from [console.groq.com/keys](https://console.groq.com/keys) for live multimodal AI. *(Without an API key, Escalate runs in deterministic **Demo Mode** with real RAG retrieval).*
+
+---
+
+### Method 1: Local Development (Recommended)
+
+Run the backend and frontend development servers concurrently:
+
+#### 1. Setup Backend
+```bash
+# Navigate to backend
+cd backend
+
+# Create and activate virtual environment
+python -m venv .venv
+
+# On Windows PowerShell:
+.\.venv\Scripts\Activate.ps1
+# On macOS / Linux:
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure environment variables
+cp .env.example .env
+# Open .env and insert your GROQ_API_KEY (optional: HF_TOKEN)
+```
+
+#### 2. Start Backend Server
+```bash
+# From the backend directory:
+uvicorn app.main:app --reload --port 8000
+```
+- API is live at `http://localhost:8000`
+- Interactive OpenAPI docs: `http://localhost:8000/docs`
+- Health check: `http://localhost:8000/api/health`
+
+#### 3. Start Frontend (New Terminal)
+```bash
+# Navigate to frontend
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start Vite dev server (proxies /api requests to port 8000)
+npm run dev
+```
+Open **`http://localhost:5173`** in your browser.
+
+---
+
+### Method 2: Single-Command Production Mode
+
+Build the React frontend and serve everything directly from FastAPI on a single port:
+
+```bash
+# 1. Build frontend assets
+cd frontend
+npm install
+npm run build
+cd ..
+
+# 2. Run FastAPI (serves frontend/dist + /api)
+cd backend
+uvicorn app.main:app --port 8000
+```
+Open **`http://localhost:8000`** in your browser.
+
+---
+
+### Running Automated Tests
+
+Run the full 95-test suite offline (no API keys or network connection required):
+
+```bash
+# From repository root or backend directory:
+pytest backend/tests
+```
+
+---
+
+## Deploying (Vercel)
+
+The repository is configured for full-stack deployment on Vercel:
+- Frontend: React + Vite built to `frontend/dist`
+- Backend: FastAPI serverless API via `api/index.py`
+- Configuration: `vercel.json` routes `/api/(.*)` to the Python backend and all other routes to the React single-page app.
+- Environment variables: Configure `GROQ_API_KEY` (and optionally `HF_TOKEN`) in your Vercel Project Settings -> Environment Variables.
+
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for complete details.
 - the FastAPI entrypoint `backend/app/main.py:app`;
 - where the requirements file is;
 - the frontend build output;

@@ -54,7 +54,8 @@ code { background: var(--surface-2); padding: 1px 5px; border-radius: 4px; }
 .wordmark { font-weight: 800; letter-spacing: -.02em; font-size: 1.15rem; }
 .brand strong { display: block; color: #fff; } .brand span { font-size: .75rem; color: #94a3b8; }
 .sidebar nav { display: flex; flex-direction: column; padding: .8rem .6rem; gap: 2px; flex: 1; overflow-y: auto; }
-.sidebar nav a { color: var(--side-text); text-decoration: none; padding: .55rem .7rem; border-radius: 8px; font-size: .9rem; }
+.svg-icon { vertical-align: -0.18em; display: inline-block; flex-shrink: 0; }
+.sidebar nav a { color: var(--side-text); text-decoration: none; padding: .55rem .7rem; border-radius: 8px; font-size: .9rem; display: flex; align-items: center; gap: .6rem; }
 .sidebar nav a:hover { background: #1d2733; color: #fff; }
 .sidebar nav a.active { background: var(--brand-gradient); color: #fff; font-weight: 600; box-shadow: 0 4px 14px rgba(239,75,46,.35); }
 .sidebar-foot { padding: 1rem; color: #6b7684; border-top: 1px solid #222c38; }

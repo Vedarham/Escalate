@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { api } from '../api'
+import { IconCracks, IconShield } from '../components/Icons'
 import ImageUpload from '../components/ImageUpload'
 import { Badge, Card, Confidence, ErrorBanner, Field, List, Loading, PageHeader, ResultMeta } from '../components/ui'
 import { useApi } from '../useApi'
@@ -20,7 +21,7 @@ export default function Cracks() {
 
   return (
     <>
-      <PageHeader icon="🧱" title="Structural Crack Analysis"
+      <PageHeader icon={<IconCracks size={28} color="var(--accent)" />} title="Structural Crack Analysis"
         subtitle="Classify cracks, estimate severity, find probable causes and repair methods." />
       <div className="layout-2">
         <Card title="Input">
@@ -90,7 +91,7 @@ export default function Cracks() {
                 {arr(d.recommended_actions).map((a, i) => (
                   <div className="item" key={i}>
                     <div className="row between"><strong>{a.action}</strong><Badge value={a.priority} /></div>
-                    <p className="small">🛠 {a.method}</p>
+                    <p className="small"><IconShield size={13} /> {a.method}</p>
                   </div>
                 ))}
               </Card>

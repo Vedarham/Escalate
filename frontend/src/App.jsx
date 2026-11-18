@@ -1,5 +1,6 @@
 import { Component, useState } from 'react'
 import { NavLink, Route, Routes, useLocation } from 'react-router-dom'
+import { IconDashboard, IconHistory } from './components/Icons'
 import Cracks from './pages/Cracks'
 import Dashboard, { MODULES } from './pages/Dashboard'
 import History from './pages/History'
@@ -39,9 +40,11 @@ export default function App() {
           <div><strong className="wordmark">Escalate</strong><span>Construction Intelligence</span></div>
         </div>
         <nav onClick={() => setNavOpen(false)}>
-          <NavLink to="/" end>🏗 Dashboard</NavLink>
-          {MODULES.map((m) => <NavLink key={m.to} to={m.to}>{m.icon} {m.title}</NavLink>)}
-          <NavLink to="/history">🗂 History</NavLink>
+          <NavLink to="/" end><IconDashboard size={18} /> <span>Dashboard</span></NavLink>
+          {MODULES.map((m) => (
+            <NavLink key={m.to} to={m.to}><m.Icon size={18} /> <span>{m.title}</span></NavLink>
+          ))}
+          <NavLink to="/history"><IconHistory size={18} /> <span>History</span></NavLink>
         </nav>
         <div className="sidebar-foot small">© Escalate · AI decision support</div>
       </aside>

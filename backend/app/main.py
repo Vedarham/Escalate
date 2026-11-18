@@ -73,6 +73,20 @@ for r in (system.router, analysis.router, planning.router, assistant.router, leg
     app.include_router(r, prefix="/api")
 
 
+@app.get("/")
+@app.get("/api")
+def root_info():
+    return {
+        "success": True,
+        "data": {
+            "name": "Escalate API",
+            "version": "1.0.0",
+            "status": "healthy",
+            "health_endpoint": "/api/health",
+        },
+    }
+
+
 # Serve the built React app (frontend/dist) when present. API routes always take priority;
 # on Vercel the files are promoted to the CDN automatically, locally FastAPI serves them.
 DIST = Path(__file__).resolve().parents[2] / "frontend" / "dist"
